@@ -327,10 +327,8 @@ private:
     Base * obj = class_loader::impl::createInstance<Base>(derived_class_name, this);
     assert(obj != NULL);  // Unreachable assertion if createInstance() throws on failure.
 
-    if (managed) {
-      std::lock_guard<std::recursive_mutex> lock(plugin_ref_count_mutex_);
-      ++plugin_ref_count_;
-    }
+    std::lock_guard<std::recursive_mutex> lock(plugin_ref_count_mutex_);
+    ++plugin_ref_count_;
 
     return obj;
   }
